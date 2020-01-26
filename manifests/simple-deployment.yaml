@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-app
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "hostname > /usr/share/nginx/html/hostname.txt"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: my-app
+  name: my-app
+spec:
+  selector:
+    app: my-app
+  ports:
+  - port: 80
