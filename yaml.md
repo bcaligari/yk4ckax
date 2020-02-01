@@ -23,6 +23,9 @@
     * unless the next line starts with a `-` (array item) in which case it should align with the *key*
 * If it doesn't look right, then there's probably something wrong.
 * Mutliple objects in the same document are separated by a `---` line.
+    * `---` *should* indicate the start of a document.  It is probably a good practice to `---` all
+the yaml documents.
+    * Likewise, `...` *should* indicate the end of a document.
 * API objects such as `Deployments` may contain templates for other API objects.  Indentation can be a pain.
 
 ## YAML objects
