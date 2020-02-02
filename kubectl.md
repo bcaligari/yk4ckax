@@ -106,7 +106,7 @@ kubectl explain [--api-version=apps/v1] deploy[.spec[.template[...]]]
     * `-c` to explicitly choose which container in pod
     * `-f` to follow
 * `get` the `events` objects
-    * `--sort-by='.metadata.creationTimestamp'
+    * `--sort-by='.metadata.creationTimestamp'`
     * `Event` is a namespaced resource (`kubectl api-resources`)
 
 ```{text}
@@ -135,6 +135,7 @@ kubectl get pods -l app=my-app,pod-template-hash=8567898f89
 
 ```{text}
 kubectl get events --sort-by=.metadata.creationTimestamp
+```
 
 ### Creating jobs imperatively
 
@@ -218,7 +219,8 @@ Other parameters, such as replicas and ports for a deployment, edited in interac
 kubectl edit deployments.apps my-dep 
 ```
 
-#### Kill an object rudely
+#### Killing an object rudely
+
 ```{text}
 kubectl delete deployments.apps my-dep --force --grace-period=0
 ```
