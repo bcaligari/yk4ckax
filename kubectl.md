@@ -137,33 +137,56 @@ kubectl get pods -l app=my-app,pod-template-hash=8567898f89
 kubectl get events --sort-by=.metadata.creationTimestamp
 ```
 
-### Creating jobs imperatively
+### Creating objects imperatively
 
 * `kubectl <verb> <details>`
     * `run` - Pod (Deployments may work but is deprecated)
     * `create` - most objects
     * `expose` - Service
-* `... --dry-run -o yaml` - output yaml to achieve same *declaratively*
+* Append `--dry-run -o yaml` to output yaml manifest to achieve same *declaratively*
+
+#### Run a pod overriding container's `command`
 
 ```{text}
 kubectl run my-pod --image=busybox --command --restart=Never -- /bin/sleep infinity
 ```
 
+#### Run a pod overriding container's `args`
+
+```{text}
+kubectl run my-pod --image=busybox --command --restart=Never -- /bin/sleep infinity
+```
+
+#### Create a pod and listen on a port
+
 ```{text}
 kubectl run my-pod --image=nginx --restart=Never --port=80
 ```
+
+#### This pod will Complete and stay that way
+
+The default `restartPolicy` for a declaratively generated pod is `Always` not `Never` in which case the below would
+keep completing and then restarting.
 
 ```{text}
 kubectl run my-pod --image=busybox --restart=Never -- ls
 ```
 
+#### Create a job
+
+In the old days this used to be achieved with `kubectl run ... --restart=OnFailure ...`.
+
 ```{text}
 kubectl create job my-job --image=busybox -- /bin/sh -c "sleep 5; echo I am done here"
 ```
 
+#### Create a service
+
 ```{text}
 kubectl create service clusterip hello --tcp=80:5000
 ```
+
+Could still use `kubectl expose ...` for some service creation.
 
 ```{text}
 kubectl run blah --image=nginx --port=80 --restart=Never
